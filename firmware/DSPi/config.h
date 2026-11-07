@@ -48,7 +48,7 @@ extern volatile uint32_t nominal_feedback_10_14;
 // pin adjacent to the output cluster (5 = SPDIF RX, 6-9 = SPDIF TX, 10 = PDM,
 // 11 = DAC mute, 13 = MCK, 14-19 = I2S/UART/I2C).
 #if PICO_RP2350
-#define PICO_ADAT_PIN          12
+#define PICO_ADAT_PIN          25
 #endif
 
 // Legacy aliases
