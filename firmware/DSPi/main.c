@@ -1974,7 +1974,7 @@ int main(void) {
     // Enable watchdog
     watchdog_enable(8000, 1);
 
-    tac5112_init()
+    tac5112_init();
 
     while (1) {
         // Update watchdog
