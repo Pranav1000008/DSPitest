@@ -25,6 +25,7 @@ jobs:
       with:
         repository: raspberrypi/pico-sdk
         path: 'pico-sdk'
+        submodules: recursive
 
     - uses: fiam/arm-none-eabi-gcc@v1
       with:
