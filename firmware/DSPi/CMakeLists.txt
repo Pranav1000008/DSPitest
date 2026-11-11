@@ -169,6 +169,7 @@ target_link_libraries(DSPi
     pico_audio_i2s_multi
     pico_spdif_rx
     tinyusb_device
+    hardware_i2c
 )
 
 # Debug UART removed; GPIO 16/17 are freed for the UART control interface.
