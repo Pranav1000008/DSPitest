@@ -30,7 +30,7 @@ jobs:
 
     - uses: carlosperate/arm-none-eabi-gcc-action@v1
       with:
-        release: '13.3.rel1'
+        release: '13.3.Rel1'
 
 
     - name: Configure CMake
