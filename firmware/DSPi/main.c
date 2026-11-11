@@ -47,6 +47,7 @@
 #include "usb_feedback_controller.h"
 #include "usb_descriptors.h"
 #include "tusb.h"
+#include "hardware/i2c.h"
 
 // ----------------------------------------------------------------------------
 // GLOBAL DEFINITIONS
@@ -1931,6 +1932,34 @@ void core0_init() {
     control_surfaces_init();
 }
 
+static void tac5112_write_reg(uint8_t reg, uint8_t val) {
+    uint8_t buf[2];
+    buf[0] = reg;
+    buf[1] = val;
+    i2c_write_blocking(i2c1, 0x50, buf, 2, false);
+}
+
+static void tac5112_init(void) {
+    i2c_init(i2c1, 100 * 1000);
+    gpio_set_function(14, GPIO_FUNC_I2C);
+    gpio_set_function(15, GPIO_FUNC_I2C);
+    gpio_pull_up(14);
+    gpio_pull_up(15);
+    sleep_ms(20);
+
+    tac5112_write_reg(0x00, 0x00); // Page 0
+    tac5112_write_reg(0x01, 0x01); // Soft Reset
+    sleep_ms(20);
+    tac5112_write_reg(0x02, 0x0B); // Device Wake-up
+    tac5112_write_reg(0x3C, 0x10); // ADC Ch1 Single-Ended IN1P
+    tac5112_write_reg(0x41, 0x10); // ADC Ch2 Single-Ended IN2P
+    tac5112_write_reg(0x1F, 0x44); // Single-Ended Line-Out
+    tac5112_write_reg(0x10, 0x50); // DOUT pin Primary ASI output
+    tac5112_write_reg(0x1A, 0x0C); // Standard I2S Mode, 32-bit word length
+    tac5112_write_reg(0x76, 0xCC); // Enable Stereo ADC + Stereo DAC
+    tac5112_write_reg(0x78, 0x60); // Power up DAC & ADC channels
+}
+
 int main(void) {
     // Initial LED on to show we're alive
     gpio_init(25); gpio_set_dir(25, GPIO_OUT);
@@ -1944,6 +1973,8 @@ int main(void) {
 
     // Enable watchdog
     watchdog_enable(8000, 1);
+
+    tac5112_init()
 
     while (1) {
         // Update watchdog
