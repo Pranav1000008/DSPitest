@@ -17,8 +17,9 @@ jobs:
     # well on Windows or Mac.  You can convert this to a matrix build if you need
     # cross-platform coverage.
     # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
+    
     steps:
     - uses: actions/checkout@v2
     - uses: actions/checkout@master
@@ -28,7 +29,11 @@ jobs:
         submodules: recursive
 
     - name: Install ARM GCC Toolchain
-      run: sudo apt-get update && sudo apt-get install -y gcc-arm-none-eabi libnewlib-arm-none-eabi libstdc++-arm-none-eabi-newlib
+      run: |
+        curl -Lo arm-gcc.tar.xz https://arm.com
+        sudo mkdir -p /opt/arm-gcc
+        sudo tar -xf arm-gcc.tar.xz -C /opt/arm-gcc --strip-components=1
+        echo "/opt/arm-gcc/bin" >> $GITHUB_PATH
 
 
     - name: Configure CMake
