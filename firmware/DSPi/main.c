@@ -1939,14 +1939,6 @@ static void tac5112_write_reg(uint8_t reg, uint8_t val) {
     i2c_write_blocking(i2c1, 0x50, buf, 2, false);
 }
 
-static void tac5112_init(void) {
-    i2c_init(i2c1, 100 * 1000);
-    gpio_set_function(14, GPIO_FUNC_I2C);
-    gpio_set_function(15, GPIO_FUNC_I2C);
-    gpio_pull_up(14);
-    gpio_pull_up(15);
-    sleep_ms(50);
-
     tac5112_write_reg(0x00, 0x00); // Page 0
     tac5112_write_reg(0x01, 0x01); // Soft Reset
     sleep_ms(20);
@@ -1955,10 +1947,10 @@ static void tac5112_init(void) {
     tac5112_write_reg(0x41, 0x10); // ADC Ch2 Single-Ended IN2P
     tac5112_write_reg(0x1F, 0x44); // Single-Ended Line-Out
     tac5112_write_reg(0x10, 0x50); // DOUT pin Primary ASI output
-    tac5112_write_reg(0x1A, 0x30); // Standard I2S Mode (00), 32-bit word length (11)
+    tac5112_write_reg(0x1A, 0x0C); // Standard I2S Mode, 32-bit word length
     tac5112_write_reg(0x76, 0xCC); // Enable Stereo ADC + Stereo DAC
     tac5112_write_reg(0x78, 0x60); // Power up DAC & ADC channels
-}
+
 
 
 int main(void) {
