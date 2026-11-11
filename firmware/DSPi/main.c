@@ -1950,7 +1950,7 @@ static void tac5112_write_reg(uint8_t reg, uint8_t val) {
     tac5112_write_reg(0x1A, 0x0C); // Standard I2S Mode, 32-bit word length
     tac5112_write_reg(0x76, 0xCC); // Enable Stereo ADC + Stereo DAC
     tac5112_write_reg(0x78, 0x60); // Power up DAC & ADC channels
-
+}
 
 
 int main(void) {
