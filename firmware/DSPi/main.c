@@ -1955,9 +1955,11 @@ static void tac5112_init(void) {
     tac5112_write_reg(0x41, 0x10); // ADC Ch2 Single-Ended IN2P
     tac5112_write_reg(0x1F, 0x44); // Single-Ended Line-Out
     tac5112_write_reg(0x10, 0x50); // DOUT pin Primary ASI output
-    tac5112_write_reg(0x1A, 0x0C); // Standard I2S Mode, 32-bit word length
+    tac5112_write_reg(0x1A, 0x70);
     tac5112_write_reg(0x76, 0xCC); // Enable Stereo ADC + Stereo DAC
     tac5112_write_reg(0x78, 0x60); // Power up DAC & ADC channels
+    tac5112_write_reg(0x28, 0x20);
+    tac5112_write_reg(0x29, 0x21);
 }
 
 int main(void) {
