@@ -28,12 +28,9 @@ jobs:
         path: 'pico-sdk'
         submodules: recursive
 
-    - name: Install ARM GCC Toolchain
-      run: |
-        curl -Lo arm-gcc.tar.xz https://arm.com
-        sudo mkdir -p /opt/arm-gcc
-        sudo tar -xf arm-gcc.tar.xz -C /opt/arm-gcc --strip-components=1
-        echo "/opt/arm-gcc/bin" >> $GITHUB_PATH
+    - uses: carlosperate/arm-none-eabi-gcc-action@v1
+      with:
+        release: '13.3.rel1'
 
 
     - name: Configure CMake
